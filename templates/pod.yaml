@@ -55,9 +55,7 @@ spec:
         - "cat /azp/_diag/Agent_*.log | grep \"Listening for Jobs\""
       initialDelaySeconds: 15
       periodSeconds: 5
-  {{- if .Values.imagePullSecrets }}
+  {{- if .Values.imagePullSecrets.exists }}
   imagePullSecrets:
-    {{- range .Values.imagePullSecrets }}
-    - name: {{ .name }}
-    {{- end }}
+    - name: {{.Values.imagePullSecrets.name }}
   {{- end }}

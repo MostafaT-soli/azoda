@@ -15,10 +15,13 @@ env:
     AZP_POOL : <pool name> 
 
 serviceAccount:
-  exists: true
+  exists: false
   name: demand-agent-serviceaccount
 
-imagePullSecrets: []
+imagePullSecrets:
+  exists: true
+  name: regcred
+
 # imagePullSecrets:
 #   - name: regcred
 

@@ -1,16 +1,17 @@
 podName: demandagent
 image:
-  repository: 
-  tag: 
-  pullPolicy: 
+  repository: matrek/demand-java-agent
+  tag: 1.1
+  pullPolicy: IfNotPresent
+
 
 # agent type or tag 
 
-type : 
+type: java
 
 env:
   useSecret: true
-  secretName: 
+  secretName: regcred
   directValues: 
     AZP_URL: 
     AZP_TOKEN: 
@@ -22,11 +23,11 @@ serviceAccount:
 
 imagePullSecrets:
   exists: true
-  name: 
+  name: regcred
 
 
 hostAliases:
-  required : false
+  required : true
   # example below 
   hosts:
   - ip: "172.16.40.21"

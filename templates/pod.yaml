@@ -31,21 +31,21 @@ spec:
       - name: AZP_TOKEN
         valueFrom:
           secretKeyRef:
-            name: {{ $.Values.env.AZP_TOKEN }}
+            name: {{ $.Values.env.secretName }}
             key: AZP_TOKEN
       - name: AZP_POOL
         valueFrom:
           secretKeyRef:
-            name: {{ $.Values.env.AZP_POOL }}
+            name: {{ $.Values.env.secretName }}
             key: AZP_POOL
     {{- else }}
     env:
       - name: AZP_URL
-        value: {{ $value }}
+        value: {{ $.Values.env.directValues.AZP_URL }}
       - name: AZP_TOKEN
-        value: {{ $value }}
+        value: {{ $.Values.env.directValues.AZP_TOKEN }}
       - name: AZP_POOL
-        value: {{ $value }}
+        value: {{ $.Values.env.directValues.AZP_POOL }}
     {{- end }}
     readinessProbe:
       exec:

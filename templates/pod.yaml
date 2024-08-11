@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.podName }}
+  labels:
+    app: "demand-agent-{{ .Values.type }}"
+spec:
+  {{- if .Values.serviceAccount.exists }}
+  serviceAccountName: {{ .Values.serviceAccount.name }}
+  {{- end }}
+  {{- if .Values.hostAliases.required }}
+  hostAliases:
+    {{- range .Values.hostAliases.hosts }}
+    - ip: "{{ .ip }}"
+      hostnames:
+        {{- range .hostnames }}
+        - "{{ . }}"
+        {{- end }}
+    {{- end }}
+  {{- end }}  
+  containers:
+  - name: kubepodcreation
+    image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+    {{- if .Values.env.useSecret }}
+    env:
+      - name: AZP_URL
+        valueFrom:
+          secretKeyRef:
+            name: {{ $.Values.env.secretName }}
+            key: AZP_URL
+      - name: AZP_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: {{ $.Values.env.AZP_TOKEN }}
+            key: AZP_TOKEN
+      - name: AZP_POOL
+        valueFrom:
+          secretKeyRef:
+            name: {{ $.Values.env.AZP_POOL }}
+            key: AZP_POOL
+    {{- else }}
+    env:
+      - name: AZP_URL
+        value: {{ $value }}
+      - name: AZP_TOKEN
+        value: {{ $value }}
+      - name: AZP_POOL
+        value: {{ $value }}
+    {{- end }}
+    readinessProbe:
+      exec:
+        command:
+        - /bin/sh
+        - -c
+        - "cat /azp/_diag/Agent_*.log | grep \"Listening for Jobs\""
+      initialDelaySeconds: 15
+      periodSeconds: 5
+  {{- if .Values.imagePullSecrets }}
+  imagePullSecrets:
+    {{- range .Values.imagePullSecrets }}
+    - name: {{ .name }}
+    {{- end }}
+  {{- end }}

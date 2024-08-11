@@ -3,11 +3,11 @@ entries:
   demandagent:
   - apiVersion: v2
     appVersion: "1.1"
-    created: "2024-08-11T15:45:22.8022978+03:00"
+    created: "2024-08-11T15:53:12.7206263+03:00"
     description: A Helm chart for Kubernetes
-    digest: 75f801d8c8447c37ef9900d5070a28dfbfb336b3f2a0b7244c962d672d78ac39
+    digest: 0f185275f1cd35cdbdabcb440f061ef39ab8362ebefb5c581078d8114b4e632d
     name: demandagent
     urls:
     - demandagent-0.1.1.tgz
     version: 0.1.1
-generated: "2024-08-11T15:45:22.7996703+03:00"
+generated: "2024-08-11T15:53:12.7135801+03:00"

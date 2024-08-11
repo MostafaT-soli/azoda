@@ -11,7 +11,7 @@ type: java
 
 env:
   useSecret: true
-  secretName: regcred
+  secretName: azdevops
   directValues: 
     AZP_URL: 
     AZP_TOKEN: 
